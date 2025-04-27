@@ -1,12 +1,15 @@
 import css from "./SearchBar.module.css";
 import { toast } from "react-hot-toast";
-import { Formik, Field, Form } from "formik"
+import { Formik, Field, Form, FormikHelpers } from "formik";
+import { SearchBarProps } from "../../App.types";
+import { FormValues } from "../../App.types";
 
-export default function SearchBar({ onSearch }) {
-  const handleSubmit = (values, actions) => {
+
+export default function SearchBar({ onSearch }: SearchBarProps) {
+  const handleSubmit = (values: FormValues, actions: FormikHelpers <FormValues>) => {
     const searchImage = values.image.trim();
     if (!searchImage) {
-      toast.error("Please enter a search term.");
+      toast.error('Please enter a search term.');
       actions.setSubmitting(false);
       return;
     }
@@ -17,8 +20,7 @@ export default function SearchBar({ onSearch }) {
   return (
     <header className={css.header}>
       <Formik
-        className={css.formik}
-        initialValues={{ image: "" }}
+        initialValues={{ image: '' }}
         onSubmit={handleSubmit}
       >
         <Form className={css.form}>

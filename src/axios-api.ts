@@ -4,9 +4,22 @@ const API_KEY = "wXnCuk4Sbv1x06KszY_ZYTRFwFaGNf4_2_eHxigHTO8";
 const BASE_URL = "https://api.unsplash.com/search/photos";
 const PER_PAGE = 16;
 
-export const fetchImage = async (image, page = 1) => {
+export interface Image {
+  id: string;
+  alt_description: string | null;
+  urls: {
+    small: string;
+    regular: string;
+  };
+}
+
+interface FetchImagesResponse {
+  results: Image[];
+}
+
+export const fetchImage = async (image: string, page: number = 1): Promise<Image[]> => {
   try {
-    const response = await axios.get(BASE_URL, {
+    const response = await axios.get<FetchImagesResponse>(BASE_URL, {
       params: {
         query: image,
         page,

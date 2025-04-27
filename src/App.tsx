@@ -7,19 +7,20 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageModal from './components/ImageModal/ImageModal';
-import { fetchImage } from "/src/axios-api";
+import { fetchImage } from './axios-api';
+import { ImageItem } from './App.types';
 
 
 
 function App() {
-  const [pictures, setPictures] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [loadMore, setLoadMore] = useState("");
-  const [page, setPage] = useState(1);
-  const [modalImage, setModalImage] = useState(null);
+  const [pictures, setPictures] = useState<ImageItem[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [loadMore, setLoadMore] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [modalImage, setModalImage] = useState<ImageItem | null>(null);
 
-  function openModal(photo) {
+  function openModal(photo: ImageItem) {
     setModalImage(photo);
   }
 
@@ -27,7 +28,7 @@ function App() {
     setModalImage(null);
   }
 
-  const handleSearch = (image) => {
+  const handleSearch = (image: string) => {
     setLoadMore(image);
     setPage(1);
     setPictures([]);
@@ -38,7 +39,7 @@ function App() {
   };
 
   useEffect(() => {
-    if (loadMore === "") {
+    if (loadMore === '') {
       return;
     }
 
@@ -47,7 +48,13 @@ function App() {
         setError(false);
         setIsLoading(true);
         const data = await fetchImage(loadMore, page);
-        setPictures((prevImage) => [...prevImage, ...data]);
+        setPictures((prevImage) => [
+            ...prevImage,
+            ...data.map(item => ({
+            ...item,
+          alt_description: item.alt_description ?? ""
+          })),
+        ]);
       } catch {
         setError(true);
       } finally {
