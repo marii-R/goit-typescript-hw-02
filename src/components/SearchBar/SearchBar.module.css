@@ -1,0 +1,44 @@
+.header {
+    background-color: #2d2d2d;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.field {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    font-family: inherit;
+}
+
+.field::placeholder {
+    color: #aaa;
+}
+
+.btn {
+    background-color: #a92bc9;
+    color: white;
+    border: none;
+    padding: 0 24px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: inherit;
+}
+
+.btn:hover {
+    background-color: #cb23d1;
+}
